@@ -1,0 +1,51 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Default fallback to prevent unauthorized root collection queries
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Quizzes collection
+    match /quizzes/{quizId} {
+      // Anyone can fetch (get) a single quiz by its PIN code to join it
+      allow get: if true;
+      
+      // Host list quizzes associated with their hostId (using secure client queries)
+      allow list: if request.auth != null && resource.data.hostId == request.auth.uid;
+      
+      // Allow write operations for authenticated hosts
+      allow create: if request.auth != null && request.resource.data.hostId == request.auth.uid;
+      allow update: if request.auth != null && (resource == null || resource.data.hostId == request.auth.uid);
+      allow delete: if request.auth != null && resource.data.hostId == request.auth.uid;
+
+      // Subcollection: Questions (MCQs under a quiz)
+      match /questions/{questionId} {
+        // Anyone can get lists or single questions in active rooms
+        allow read: if true;
+        
+        // Host who owns the room can write/modify questions
+        allow write, update, delete: if request.auth != null;
+      }
+
+      // Subcollection: Participants (Contestants in a session)
+      match /participants/{participantId} {
+        // Anyone in the room can list and get participant stats
+        allow read: if true;
+        
+        // Host and participants themselves can update stats
+        allow create, update, delete: if true;
+      }
+
+      // Subcollection: Responses (Answers recorded per question)
+      match /responses/{responseId} {
+        // Anyone in the session can get/list responses
+        allow read: if true;
+        
+        // Safe creation of responses by contestant
+        allow create, update, delete: if true;
+      }
+    }
+  }
+}

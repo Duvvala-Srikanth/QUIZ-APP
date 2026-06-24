@@ -1,0 +1,6 @@
+{
+  "name": "Real-Time Quiz Platform",
+  "description": "A production-grade, real-time quiz application featuring live dashboards for hosts, participant modes, parsed smart MCQ imports, and robust Firestore synchronization.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

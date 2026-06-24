@@ -1,0 +1,89 @@
+{
+  "entities": {
+    "Quiz": {
+      "title": "Quiz",
+      "description": "Represents a quiz created by a host.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "hostId": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "difficulty": { "type": "string" },
+        "createdAt": { "type": "number" },
+        "status": { "type": "string" },
+        "paused": { "type": "boolean" },
+        "activeQuestionIndex": { "type": "number" },
+        "currentQuestionStartTime": { "type": "number" }
+      },
+      "required": ["id", "hostId", "name"]
+    },
+    "Question": {
+      "title": "Question",
+      "description": "A single MCQ inside a quiz.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "quizId": { "type": "string" },
+        "text": { "type": "string" },
+        "options": { "type": "object" },
+        "answer": { "type": "string" },
+        "marks": { "type": "number" },
+        "timeLimit": { "type": "number" },
+        "order": { "type": "number" }
+      },
+      "required": ["id", "quizId", "text", "options", "answer"]
+    },
+    "Participant": {
+      "title": "Participant",
+      "description": "A contestant in a quiz room.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "quizId": { "type": "string" },
+        "name": { "type": "string" },
+        "startTime": { "type": "number" },
+        "status": { "type": "string" },
+        "lastActive": { "type": "number" }
+      },
+      "required": ["id", "quizId", "name", "startTime", "status"]
+    },
+    "ParticipantResponse": {
+      "title": "ParticipantResponse",
+      "description": "Contestant's reply to an MCQ question.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "quizId": { "type": "string" },
+        "participantId": { "type": "string" },
+        "questionId": { "type": "string" },
+        "selectedOption": { "type": "string" },
+        "correctOption": { "type": "string" },
+        "isCorrect": { "type": "boolean" },
+        "marksAwarded": { "type": "number" },
+        "timeTaken": { "type": "number" },
+        "submittedAt": { "type": "number" }
+      },
+      "required": ["id", "quizId", "participantId", "questionId"]
+    }
+  },
+  "firestore": {
+    "/quizzes/{quizId}": {
+      "schema": "Quiz",
+      "description": "Lobby, draft or active quiz records."
+    },
+    "/quizzes/{quizId}/questions/{questionId}": {
+      "schema": "Question",
+      "description": "MCQs belonging to a quiz."
+    },
+    "/quizzes/{quizId}/participants/{participantId}": {
+      "schema": "Participant",
+      "description": "Contestants participating in the quiz."
+    },
+    "/quizzes/{quizId}/responses/{responseId}": {
+      "schema": "ParticipantResponse",
+      "description": "Participant answers per question."
+    }
+  }
+}
