@@ -3,12 +3,13 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBkmoiBgSCZnR8uoCutdomZWl2tBfoAKHc",
-  authDomain: "round-transport-b8t0d.firebaseapp.com",
-  projectId: "round-transport-b8t0d",
-  storageBucket: "round-transport-b8t0d.firebasestorage.app",
-  messagingSenderId: "570809635590",
-  appId: "1:570809635590:web:3baf7f4eda5f2acd678487"
+  apiKey: "AIzaSyAhUVikg2LJ4UptYDxa6SmN3oErAB0wBdM",
+  authDomain: "quiz-app-6dc5d.firebaseapp.com",
+  projectId: "quiz-app-6dc5d",
+  storageBucket: "quiz-app-6dc5d.firebasestorage.app",
+  messagingSenderId: "717878242423",
+  appId: "1:717878242423:web:40aa1c9e9d8853c01b2a72",
+  measurementId: "G-MV9VTM250J"
 };
 
 // Initialize Firebase
